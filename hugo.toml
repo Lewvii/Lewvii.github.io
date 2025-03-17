@@ -1,9 +1,9 @@
 baseURL = "https://lewvii.github.io/"
-title = "Lewvii's Blog"  # 修改为个性化标题
+title = "Lewvii's Blog"
 theme = "PaperMod"
 
 # 语言设置（可选双语）
-defaultContentLanguage = "zh-cn"  # 默认中文，可改为en-us
+defaultContentLanguage = "zh-cn"
 [languages]
   [languages.zh-cn]
     languageCode = "zh-cn"
@@ -20,10 +20,10 @@ defaultContentLanguage = "zh-cn"  # 默认中文，可改为en-us
 
 # PaperMod自定义参数
 [params]
-  homeInfoParams
-    Title = "欢迎来到Lewvii的博客"  # 首页欢迎语
-    Content = "这是一个分享技术与生活的网站，基于Hugo搭建。"  # 简介
-  socialIcons = [  # 添加社交链接
+  # homeInfoParams 不再单独声明，直接缩进其内容
+  homeInfoParams.Title = "欢迎来到Lewvii的博客"
+  homeInfoParams.Content = "这是一个分享技术与生活的网站，基于Hugo搭建。"
+  socialIcons = [
     {name = "github", url = "https://github.com/lewvii"},
     {name = "twitter", url = "https://twitter.com/yourhandle"}
   ]

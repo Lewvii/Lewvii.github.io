@@ -1,0 +1,41 @@
+baseURL = "https://lewvii.github.io/"
+title = "Lewvii's Blog"  # 修改为个性化标题
+theme = "PaperMod"
+
+# 语言设置（可选双语）
+defaultContentLanguage = "zh-cn"  # 默认中文，可改为en-us
+[languages]
+  [languages.zh-cn]
+    languageCode = "zh-cn"
+    languageName = "中文"
+    weight = 1
+  [languages.en-us]
+    languageCode = "en-us"
+    languageName = "English"
+    weight = 2
+
+# 输出格式
+[outputs]
+  home = ["HTML", "RSS"]
+
+# PaperMod自定义参数
+[params]
+  homeInfoParams
+    Title = "欢迎来到Lewvii的博客"  # 首页欢迎语
+    Content = "这是一个分享技术与生活的网站，基于Hugo搭建。"  # 简介
+  socialIcons = [  # 添加社交链接
+    {name = "github", url = "https://github.com/lewvii"},
+    {name = "twitter", url = "https://twitter.com/yourhandle"}
+  ]
+
+# 导航菜单
+[[menu.main]]
+  identifier = "posts"
+  name = "文章"
+  url = "/posts/"
+  weight = 1
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 2

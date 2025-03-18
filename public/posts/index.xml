@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Lewvii&#39;s Blog</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Lewvii&#39;s Blog</description>
+    <generator>Hugo -- 0.145.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 18 Mar 2025 09:57:19 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git</title>
+      <link>http://localhost:1313/posts/git/</link>
+      <pubDate>Tue, 18 Mar 2025 09:57:19 +0800</pubDate>
+      <guid>http://localhost:1313/posts/git/</guid>
+      <description>&lt;h1 id=&#34;引用&#34;&gt;引用&lt;/h1&gt;
+&lt;p&gt;在 Git 中，&amp;ldquo;引用&amp;rdquo;（References，简称 &lt;strong&gt;refs&lt;/strong&gt;）是管理提交历史的核心机制之一。引用本质上是&lt;strong&gt;指向 Git 对象的指针&lt;/strong&gt;（最常见的是指向提交对象），用于方便地标识分支、标签、远程仓库等。以下是 Git 引用的详细解析：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;一引用的本质&#34;&gt;一、引用的本质&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;底层存储&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Git 引用存储在 &lt;code&gt;.git/refs&lt;/code&gt; 目录中，每个引用对应一个文件，文件中保存的是&lt;strong&gt;目标对象的 SHA-1 哈希值&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例如：&lt;code&gt;.git/refs/heads/main&lt;/code&gt; 文件中存储的是 &lt;code&gt;main&lt;/code&gt; 分支的最新提交的哈希值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;引用的作用&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;替代直接使用 SHA-1 哈希值，简化操作（如切换分支、查看提交历史）。&lt;/li&gt;
+&lt;li&gt;动态跟踪代码的最新状态（如分支的移动）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;二引用的类型&#34;&gt;二、引用的类型&lt;/h3&gt;
+&lt;p&gt;Git 引用分为以下几类：&lt;/p&gt;
+&lt;h3 id=&#34;1-本地分支branches&#34;&gt;1. &lt;strong&gt;本地分支（Branches）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;路径&lt;/strong&gt;: &lt;code&gt;.git/refs/heads/&amp;lt;branch-name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;作用&lt;/strong&gt;: 指向分支的最新提交（即分支的“头”）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看 main 分支的最新提交&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .git/refs/heads/main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-标签tags&#34;&gt;2. &lt;strong&gt;标签（Tags）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;路径&lt;/strong&gt;: &lt;code&gt;.git/refs/tags/&amp;lt;tag-name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;作用&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;轻量标签&lt;/strong&gt;: 直接指向某个提交的哈希值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;附注标签&lt;/strong&gt;: 指向一个标签对象（包含作者、日期等信息），再由标签对象指向提交。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看标签 v1.0 指向的提交&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .git/refs/tags/v1.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-远程跟踪分支remote-tracking-branches&#34;&gt;3. &lt;strong&gt;远程跟踪分支（Remote-Tracking Branches）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;路径&lt;/strong&gt;: &lt;code&gt;.git/refs/remotes/&amp;lt;remote-name&amp;gt;/&amp;lt;branch-name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;作用&lt;/strong&gt;: 记录远程仓库分支的最后已知状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看远程仓库 origin 的 main 分支状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .git/refs/remotes/origin/main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4-特殊引用&#34;&gt;4. &lt;strong&gt;特殊引用&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;HEAD&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>我的第一篇博客</title>
+      <link>http://localhost:1313/posts/my-first-post/</link>
+      <pubDate>Sun, 16 Mar 2025 23:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <description>&lt;p&gt;欢迎体验我的博客！这是一个用Hugo搭建的网站。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

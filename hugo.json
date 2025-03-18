@@ -1,0 +1,53 @@
+{
+  "baseURL": "https://lewvii.github.io/",
+  "title": "Lewvii's Blog",
+  "theme": "PaperMod",
+  "defaultContentLanguage": "zh-cn",
+  "languages": {
+    "zh-cn": {
+      "languageCode": "zh-cn",
+      "languageName": "中文",
+      "weight": 1
+    },
+    "en-us": {
+      "languageCode": "en-us",
+      "languageName": "English",
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "home": ["HTML", "RSS"]
+  },
+  "params": {
+    "homeInfoParams": {
+      "Title": "欢迎来到Lewvii的博客",
+      "Content": "这是一个分享技术与生活的网站，基于Hugo搭建。"
+    },
+    "socialIcons": [
+      {
+        "name": "github",
+        "url": "https://github.com/lewvii"
+      },
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/yourhandle"
+      }
+    ]
+  },
+  "menu": {
+    "main": [
+      {
+        "identifier": "posts",
+        "name": "文章",
+        "url": "/posts/",
+        "weight": 1
+      },
+      {
+        "identifier": "about",
+        "name": "关于",
+        "url": "/about/",
+        "weight": 2
+      }
+    ]
+  }
+}

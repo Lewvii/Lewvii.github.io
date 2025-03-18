@@ -1,1 +1,73 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Lewvii's Blog</title><link>https://lewvii.github.io/</link><description>Recent content on Lewvii's Blog</description><generator>Hugo -- 0.145.0</generator><language>zh-cn</language><lastBuildDate>Sun, 16 Mar 2025 23:00:00 +0800</lastBuildDate><atom:link href="https://lewvii.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>我的第一篇博客</title><link>https://lewvii.github.io/posts/my-first-post/</link><pubDate>Sun, 16 Mar 2025 23:00:00 +0800</pubDate><guid>https://lewvii.github.io/posts/my-first-post/</guid><description>&lt;p>欢迎体验我的博客！这是一个用Hugo搭建的网站。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Lewvii's Blog</title><link>https://lewvii.github.io/</link><description>Recent content on Lewvii's Blog</description><generator>Hugo -- 0.145.0</generator><language>zh-cn</language><lastBuildDate>Tue, 18 Mar 2025 09:57:19 +0800</lastBuildDate><atom:link href="https://lewvii.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Git</title><link>https://lewvii.github.io/posts/git/</link><pubDate>Tue, 18 Mar 2025 09:57:19 +0800</pubDate><guid>https://lewvii.github.io/posts/git/</guid><description>&lt;h1 id="引用">引用&lt;/h1>
+&lt;p>在 Git 中，&amp;ldquo;引用&amp;rdquo;（References，简称 &lt;strong>refs&lt;/strong>）是管理提交历史的核心机制之一。引用本质上是&lt;strong>指向 Git 对象的指针&lt;/strong>（最常见的是指向提交对象），用于方便地标识分支、标签、远程仓库等。以下是 Git 引用的详细解析：&lt;/p>
+&lt;hr>
+&lt;h3 id="一引用的本质">一、引用的本质&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>底层存储&lt;/strong>&lt;/p>
+&lt;p>Git 引用存储在 &lt;code>.git/refs&lt;/code> 目录中，每个引用对应一个文件，文件中保存的是&lt;strong>目标对象的 SHA-1 哈希值&lt;/strong>。&lt;/p>
+&lt;ul>
+&lt;li>例如：&lt;code>.git/refs/heads/main&lt;/code> 文件中存储的是 &lt;code>main&lt;/code> 分支的最新提交的哈希值。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>引用的作用&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>替代直接使用 SHA-1 哈希值，简化操作（如切换分支、查看提交历史）。&lt;/li>
+&lt;li>动态跟踪代码的最新状态（如分支的移动）。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="二引用的类型">二、引用的类型&lt;/h3>
+&lt;p>Git 引用分为以下几类：&lt;/p>
+&lt;h3 id="1-本地分支branches">1. &lt;strong>本地分支（Branches）&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>路径&lt;/strong>: &lt;code>.git/refs/heads/&amp;lt;branch-name&amp;gt;&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>作用&lt;/strong>: 指向分支的最新提交（即分支的“头”）。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>示例&lt;/strong>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查看 main 分支的最新提交&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cat .git/refs/heads/main
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-标签tags">2. &lt;strong>标签（Tags）&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>路径&lt;/strong>: &lt;code>.git/refs/tags/&amp;lt;tag-name&amp;gt;&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>作用&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>轻量标签&lt;/strong>: 直接指向某个提交的哈希值。&lt;/li>
+&lt;li>&lt;strong>附注标签&lt;/strong>: 指向一个标签对象（包含作者、日期等信息），再由标签对象指向提交。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>示例&lt;/strong>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查看标签 v1.0 指向的提交&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cat .git/refs/tags/v1.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-远程跟踪分支remote-tracking-branches">3. &lt;strong>远程跟踪分支（Remote-Tracking Branches）&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>路径&lt;/strong>: &lt;code>.git/refs/remotes/&amp;lt;remote-name&amp;gt;/&amp;lt;branch-name&amp;gt;&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>作用&lt;/strong>: 记录远程仓库分支的最后已知状态。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>示例&lt;/strong>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查看远程仓库 origin 的 main 分支状态&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cat .git/refs/remotes/origin/main
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-特殊引用">4. &lt;strong>特殊引用&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>HEAD&lt;/strong>&lt;/p></description></item><item><title>我的第一篇博客</title><link>https://lewvii.github.io/posts/my-first-post/</link><pubDate>Sun, 16 Mar 2025 23:00:00 +0800</pubDate><guid>https://lewvii.github.io/posts/my-first-post/</guid><description>&lt;p>欢迎体验我的博客！这是一个用Hugo搭建的网站。&lt;/p></description></item></channel></rss>

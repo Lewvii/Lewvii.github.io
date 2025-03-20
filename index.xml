@@ -1,4 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Lewvii's Blog</title><link>https://lewvii.github.io/</link><description>Recent content on Lewvii's Blog</description><generator>Hugo -- 0.145.0</generator><language>zh-cn</language><lastBuildDate>Tue, 18 Mar 2025 09:57:19 +0800</lastBuildDate><atom:link href="https://lewvii.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Git</title><link>https://lewvii.github.io/posts/git/</link><pubDate>Tue, 18 Mar 2025 09:57:19 +0800</pubDate><guid>https://lewvii.github.io/posts/git/</guid><description>&lt;h1 id="引用">引用&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Lewvii's Blog</title><link>https://lewvii.github.io/</link><description>Recent content on Lewvii's Blog</description><generator>Hugo -- 0.145.0</generator><language>zh-cn</language><lastBuildDate>Thu, 20 Mar 2025 18:43:26 +0800</lastBuildDate><atom:link href="https://lewvii.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>LLVM</title><link>https://lewvii.github.io/posts/llvm/</link><pubDate>Thu, 20 Mar 2025 18:43:26 +0800</pubDate><guid>https://lewvii.github.io/posts/llvm/</guid><description>&lt;h1 id="以下是关于-llvm-项目依赖情况的分析以及它如何实现相对独立的机制">以下是关于 LLVM 项目依赖情况的分析，以及它如何实现相对独立的机制：&lt;/h1>
+&lt;hr>
+&lt;h3 id="llvm-如何实现相对独立">LLVM 如何实现“相对独立”&lt;/h3>
+&lt;p>LLVM 项目设计上追求模块化和自给自足，这体现在以下几个方面：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>自举（Self-Hosting）能力&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>LLVM 的前端编译器 Clang 是专门为 LLVM 设计的。开发者可以用一个现有的编译器（如 GCC）先构建 Clang，然后用 Clang 再构建 LLVM，形成自举。&lt;/li>
+&lt;li>自举的好处是，LLVM 不长期依赖外部编译器。一旦 Clang 可用，它就能接管后续的构建过程。这种设计让 LLVM 在工具链层面尽量减少对外部项目的依赖。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>模块化架构&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>LLVM 的核心是一个编译器基础设施库（IR、优化器、代码生成器等），这些组件是自包含的。它不依赖外部的解析器、优化器或其他编译器框架，而是自己实现了所有关键功能。&lt;/li>
+&lt;li>例如，Clang（前端）直接生成 LLVM IR（中间表示），然后交给 LLVM 核心处理，不需要借助其他工具或库。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>最小化外部库使用&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>LLVM 开发者有意避免引入大型外部依赖。例如：
+&lt;ul>
+&lt;li>不使用 Boost 这样的大型 C++ 库，而是自己实现需要的工具函数。&lt;/li>
+&lt;li>文件格式（如 ELF、Mach-O）的解析器是内置的，而不是依赖外部库（如 &lt;code>libbfd&lt;/code>）。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>这种策略减少了外部库的版本兼容性问题，也让 LLVM 更容易在不同平台上部署。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>跨平台设计&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>LLVM 的代码被设计为高度可移植，避免绑定到特定的操作系统或硬件。它通过抽象层（如 &lt;code>Support&lt;/code> 库）处理平台差异，例如文件系统操作、线程管理等，这些功能都是自己实现的，而不是依赖外部库。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>静态链接和独立性&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>在构建时，LLVM 通常会将核心功能静态链接到最终的可执行文件中（如 &lt;code>clang&lt;/code> 或 &lt;code>lli&lt;/code>）。这意味着用户拿到一个 LLVM 工具后，通常不需要额外安装其他运行时库。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="llvm-的依赖情况">LLVM 的依赖情况&lt;/h3>
+&lt;p>LLVM 项目并不是完全没有依赖，而是它的依赖被刻意控制在最小范围，以保持移植性和独立性。以下是实际情况：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>核心依赖&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>C++ 标准库&lt;/strong>：LLVM 是用 C++ 写的，因此依赖于目标平台的 C++ 标准库（如 &lt;code>libstdc++&lt;/code> 或 &lt;code>libc++&lt;/code>）。不过，它不绑定到某个特定的标准库实现，而是使用标准的 C++ 特性，尽量保持跨平台兼容。&lt;/li>
+&lt;li>&lt;strong>操作系统和工具链&lt;/strong>：LLVM 需要基本的操作系统支持（文件 I/O、线程等）和一个现有的 C++ 编译器来构建自己（如 GCC、Clang 或 MSVC）。但这些是构建时的“环境依赖”，而不是运行时的库依赖。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>可选依赖&lt;/strong>&lt;/p></description></item><item><title>Git</title><link>https://lewvii.github.io/posts/git/</link><pubDate>Tue, 18 Mar 2025 09:57:19 +0800</pubDate><guid>https://lewvii.github.io/posts/git/</guid><description>&lt;h1 id="引用">引用&lt;/h1>
 &lt;p>在 Git 中，&amp;ldquo;引用&amp;rdquo;（References，简称 &lt;strong>refs&lt;/strong>）是管理提交历史的核心机制之一。引用本质上是&lt;strong>指向 Git 对象的指针&lt;/strong>（最常见的是指向提交对象），用于方便地标识分支、标签、远程仓库等。以下是 Git 引用的详细解析：&lt;/p>
 &lt;hr>
 &lt;h3 id="一引用的本质">一、引用的本质&lt;/h3>

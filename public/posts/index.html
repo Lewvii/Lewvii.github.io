@@ -127,6 +127,27 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">LLVM
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>以下是关于 LLVM 项目依赖情况的分析，以及它如何实现相对独立的机制： LLVM 如何实现“相对独立” LLVM 项目设计上追求模块化和自给自足，这体现在以下几个方面：
+自举（Self-Hosting）能力
+LLVM 的前端编译器 Clang 是专门为 LLVM 设计的。开发者可以用一个现有的编译器（如 GCC）先构建 Clang，然后用 Clang 再构建 LLVM，形成自举。 自举的好处是，LLVM 不长期依赖外部编译器。一旦 Clang 可用，它就能接管后续的构建过程。这种设计让 LLVM 在工具链层面尽量减少对外部项目的依赖。 模块化架构
+LLVM 的核心是一个编译器基础设施库（IR、优化器、代码生成器等），这些组件是自包含的。它不依赖外部的解析器、优化器或其他编译器框架，而是自己实现了所有关键功能。 例如，Clang（前端）直接生成 LLVM IR（中间表示），然后交给 LLVM 核心处理，不需要借助其他工具或库。 最小化外部库使用
+LLVM 开发者有意避免引入大型外部依赖。例如： 不使用 Boost 这样的大型 C&#43;&#43; 库，而是自己实现需要的工具函数。 文件格式（如 ELF、Mach-O）的解析器是内置的，而不是依赖外部库（如 libbfd）。 这种策略减少了外部库的版本兼容性问题，也让 LLVM 更容易在不同平台上部署。 跨平台设计
+LLVM 的代码被设计为高度可移植，避免绑定到特定的操作系统或硬件。它通过抽象层（如 Support 库）处理平台差异，例如文件系统操作、线程管理等，这些功能都是自己实现的，而不是依赖外部库。 静态链接和独立性
+在构建时，LLVM 通常会将核心功能静态链接到最终的可执行文件中（如 clang 或 lli）。这意味着用户拿到一个 LLVM 工具后，通常不需要额外安装其他运行时库。 LLVM 的依赖情况 LLVM 项目并不是完全没有依赖，而是它的依赖被刻意控制在最小范围，以保持移植性和独立性。以下是实际情况：
+核心依赖
+C&#43;&#43; 标准库：LLVM 是用 C&#43;&#43; 写的，因此依赖于目标平台的 C&#43;&#43; 标准库（如 libstdc&#43;&#43; 或 libc&#43;&#43;）。不过，它不绑定到某个特定的标准库实现，而是使用标准的 C&#43;&#43; 特性，尽量保持跨平台兼容。 操作系统和工具链：LLVM 需要基本的操作系统支持（文件 I/O、线程等）和一个现有的 C&#43;&#43; 编译器来构建自己（如 GCC、Clang 或 MSVC）。但这些是构建时的“环境依赖”，而不是运行时的库依赖。 可选依赖
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-03-20 18:43:26 +0800 CST'>March 20, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to LLVM" href="http://localhost:1313/posts/llvm/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Git
     </h2>
   </header>
